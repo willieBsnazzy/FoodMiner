@@ -29,6 +29,7 @@ public class Request {
 	
 	// Advanced Search // Add arguments!!!
 	Request( Search searchInput ){
+		this.keywords = searchInput.getKeywords();
 		this.ingredients = searchInput.getKeywords().split("%5B");
 		this.Kcal = searchInput.getKcal();
 		this.searchType = searchInput.getSearchType();

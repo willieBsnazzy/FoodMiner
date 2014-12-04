@@ -95,7 +95,6 @@ public class HomeWindow2 extends JFrame {
 	private int index;
 	private GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 
-	
 	private BufferedImage BufferedImages[] = new BufferedImage[10];
 	private JScrollPane scrollPane = new JScrollPane();
 	private JPanel panel_2 = new JPanel();
@@ -175,7 +174,7 @@ public class HomeWindow2 extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			RecipeArray.getInstance().clear();
 			Search newSearch = new Search(txtSearch.getText());
-			Request newResults = new Request(newSearch.getKeywords());
+			Request newResults = new Request(newSearch);
 			try {
 				RecipeArray.getInstance().fillArray(newResults.sendPost());
 			} catch (Exception e2) {
@@ -200,6 +199,7 @@ public class HomeWindow2 extends JFrame {
 			}
 		}
 		});
+		
 		txtSearch.setForeground(UIManager.getColor("CheckBox.disabledText"));
 		txtSearch.setText("Search Recipes, ingredients...");
 		GridBagConstraints gbc_txtSearch = new GridBagConstraints();
@@ -217,7 +217,7 @@ public class HomeWindow2 extends JFrame {
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 3;
 		
-//		contentPane.add(AdvancedPanel, gbc_panel_1);
+		contentPane.add(AdvancedPanel, gbc_panel_1);
 		
 		GridBagLayout gbl_AdvancedPanel = new GridBagLayout();
 		gbl_AdvancedPanel.columnWidths = new int[] {0};
@@ -331,8 +331,7 @@ public class HomeWindow2 extends JFrame {
 		}
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPane.add(scrollPane, gbc_scrollPane);
-			
+		contentPane.add(scrollPane, gbc_scrollPane);		
 	}
 	
 
@@ -341,7 +340,7 @@ public class HomeWindow2 extends JFrame {
 			public void run() {
 				try {
 					Search mySearch = new Search("");
-					Request myRequest = new Request( "&allowedHoliday[]=holiday^holiday-christmas");
+					Request myRequest = new Request( mySearch);
 					RecipeArray.getInstance().fillArray(myRequest.sendPost());
 				
 					HomeWindow2 frame = new HomeWindow2();
