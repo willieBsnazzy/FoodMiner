@@ -12,7 +12,7 @@ public class Request {
 
 	String keywords;
 	String ingredients[];
-	private int Kcal; 
+	private int Kcal = Integer.MAX_VALUE; 
 	private int searchType;
 	private int cookTime;
 	private String appID = "e4b2cd7b";
@@ -40,7 +40,7 @@ public class Request {
 		// Keyword Search
 		if(searchType == 0){
 			
-			RequestURL = new URL(url + "&q=" + keywords + "&requirePictures=true"); // base URL + basic keywords + pictures required
+			RequestURL = new URL(url + "&q=" + keywords + "&nutrition.ENERC_KCAL.max=" + Kcal + "&requirePictures=true"); // base URL + basic keywords + pictures required
 		}
 		// Ingredient allowed search
 		else if(searchType == 1){
@@ -48,7 +48,7 @@ public class Request {
 			for(int i=0; i < ingredients.length; i++){
 				baseURL = baseURL + "&allowedIngredients[]=" + ingredients[i];
 			}			
-			RequestURL = new URL(baseURL + "&requiredPictures=true");
+			RequestURL = new URL(baseURL + "&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
 		}
 		// Exclude Ingredient search
 		else if(searchType == 2){ 
@@ -56,7 +56,7 @@ public class Request {
 			for(int i=0; i < ingredients.length; i++){
 				baseURL = baseURL + "&excludedIngredients[]=" + ingredients[i];
 			}			
-			RequestURL = new URL(baseURL + "&requiredPictures=true");
+			RequestURL = new URL(baseURL + "&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
 		}
 		//
 		System.out.println(RequestURL.toString());

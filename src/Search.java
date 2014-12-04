@@ -15,9 +15,9 @@ public class Search {
 	Search(String Keywords, int searchType, int Kcal, int cookTime){
 		Keywords.replaceAll("[^a-zA-Z]", "");
 		this.Keywords = Keywords; 	
-		this.Kcal = Kcal;
+		this.Kcal = Kcal == 0 ? Integer.MAX_VALUE : Kcal;
+		this.cookTime = cookTime == 0 ? Integer.MAX_VALUE: cookTime;		
 		this.searchType = searchType;
-		this.cookTime = cookTime;
 	}
 	
 	public String getKeywords(){
