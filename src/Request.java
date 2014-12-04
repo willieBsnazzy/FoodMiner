@@ -49,7 +49,7 @@ public class Request {
 			for(int i=0; i < ingredients.length; i++){
 				baseURL = baseURL + "&allowedIngredients[]=" + ingredients[i];
 			}			
-			RequestURL = new URL(baseURL + "&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
+			RequestURL = new URL(baseURL +"&q=" +"&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
 		}
 		// Exclude Ingredient search
 		else if(searchType == 2){ 
@@ -57,7 +57,7 @@ public class Request {
 			for(int i=0; i < ingredients.length; i++){
 				baseURL = baseURL + "&excludedIngredients[]=" + ingredients[i];
 			}			
-			RequestURL = new URL(baseURL + "&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
+			RequestURL = new URL(baseURL + "&q=" +"&nutrition.ENERC_KCAL.max=" + Kcal + "&requiredPictures=true");
 		}
 		//
 		System.out.println(RequestURL.toString());

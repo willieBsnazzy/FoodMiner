@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -47,7 +48,9 @@ import javax.swing.JSlider;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+
 import javax.swing.event.ChangeListener;
+
 import java.awt.SystemColor;
 import java.awt.Cursor;
 
@@ -94,7 +97,7 @@ public class HomeWindow2 extends JFrame {
 	private RecipeCell newRecipes[] = {newRecipe1, newRecipe2, newRecipe3, newRecipe4, newRecipe5, newRecipe6, newRecipe7, newRecipe8, newRecipe9, newRecipe10};
 	private int index;
 	private GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-
+	private int searchType = 0;
 	private BufferedImage BufferedImages[] = new BufferedImage[10];
 	private JScrollPane scrollPane = new JScrollPane();
 	private JPanel panel_2 = new JPanel();
@@ -172,8 +175,21 @@ public class HomeWindow2 extends JFrame {
 		
 		txtSearch.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			
+			// Check for search type 
+			if(rdbtnKeywords.isSelected())searchType = 0;
+			if(rdbtnIngredients.isSelected())searchType = 1;
+			if(rdbtnExcludeIngredients.isSelected())searchType = 2;
+			
 			RecipeArray.getInstance().clear();
 			Search newSearch = new Search(txtSearch.getText());
+			newSearch.setSearchType(searchType);
+			
+			if(newSearch.getKeywords().equals("")){
+				JOptionPane.showMessageDialog(null, 
+						"No recipes found for: " + newSearch.getKeywords().replace("%5B", " "),
+						"No Results", JOptionPane.WARNING_MESSAGE);
+			}
 			Request newResults = new Request(newSearch);
 			try {
 				RecipeArray.getInstance().fillArray(newResults.sendPost());
@@ -195,7 +211,9 @@ public class HomeWindow2 extends JFrame {
 				}
 			}
 			else{
-				
+				JOptionPane.showMessageDialog(null, 
+						"No recipes found for: " + newSearch.getKeywords().replace("%5B", " "),
+						"No Results", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		});
@@ -266,7 +284,6 @@ public class HomeWindow2 extends JFrame {
 		});
 		calSlider.setMaximum(2000);
 		
-		
 		calSlider.setValue(2000);
 		GridBagConstraints gbc_calSlider = new GridBagConstraints();
 		gbc_calSlider.insets = new Insets(0, 0, 0, 0);
@@ -326,8 +343,7 @@ public class HomeWindow2 extends JFrame {
 			gbc_newRecipes[i].fill = GridBagConstraints.BOTH;
 			gbc_newRecipes[i].gridx = 0;
 			gbc_newRecipes[i].gridy = i;
-			panel_2.add(newRecipes[i], gbc_newRecipes[i]);
-			
+			panel_2.add(newRecipes[i], gbc_newRecipes[i]);	
 		}
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
